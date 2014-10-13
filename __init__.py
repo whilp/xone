@@ -2,15 +2,15 @@ from __future__ import with_statement
 
 import Live
 from _Framework.ButtonElement import ButtonElement
-from _Framework.ButtonMatrixElement import ButtonMatrixElement
+# from _Framework.ButtonMatrixElement import ButtonMatrixElement
 # from _Framework.ChannelStripComponent import ChannelStripComponent
 from _Framework.ControlSurface import OptimizedControlSurface
 from _Framework.EncoderElement import EncoderElement
 # from _Framework.Layer import Layer
-from _Framework.MixerComponent import MixerComponent
-from _Framework.SessionComponent import SessionComponent
+# from _Framework.MixerComponent import MixerComponent
+# from _Framework.SessionComponent import SessionComponent
 from _Framework.SliderElement import SliderElement
-from _Framework.TransportComponent import TransportComponent
+# from _Framework.TransportComponent import TransportComponent
 
 from _Generic.SpecialMixerComponent import SpecialMixerComponent
 
@@ -79,7 +79,6 @@ class Controller(OptimizedControlSurface):
         pass
 
     def mixer(self):
-        send_info = []
         mixer = SpecialMixerComponent(TRACKS)
         mixer.name = 'Mixer'
 
@@ -89,39 +88,6 @@ class Controller(OptimizedControlSurface):
         mixer.master_strip().set_volume_control(encoder)
 
         return mixer
-
-
-
-
-
-
-
-    def session(self):
-        session = SessionComponent(
-            TRACKS,
-            SCENES,
-        )
-        return session
-
-    def mixer2(self):
-
-        volume_controls = ButtonMatrixElement(
-            rows=[[
-                Fader(16),
-                Fader(17),
-                Fader(18),
-                Fader(19),
-            ]]
-        )
-        mixer = MixerComponent(
-            TRACKS,
-        )
-        mixer.set_volume_controls(volume_controls)
-        return mixer
-
-    def transport(self):
-        transport = TransportComponent()
-        transport.set_play_button(Button(36))
 
 
 def create_instance(c):
