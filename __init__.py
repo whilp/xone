@@ -1,3 +1,7 @@
+"""
+- checkout Launchkey/SessionNavigationComponent.py for scene/track scrolling
+"""
+
 from __future__ import with_statement
 
 import Live
