@@ -61,33 +61,49 @@ class Encoder(EncoderElement):
             map_mode=self.map_mode)
 
 
+class Mixer(SpecialMixerComponent):
+    tracks = TRACKS
+
+    def __init__(self):
+        SpecialMixerComponent.__init__(
+            self,
+            self.tracks)
+        self.name = 'Mixer'
+        self.strips()
+
+    def strips(self):
+        for track in range(self.tracks):
+            self.strip(track)
+
+    def strip(self, track):
+        strip = self.channel_strip(track)
+        strip.name = "Channel_Strip_%d" % track
+        fader = VolumeFader(track)
+        strip.set_volume_control(fader)
+        return strip
+
+
+class VolumeFader(Encoder):
+    ccs = [16, 17, 18, 19]
+
+    def __init__(self, index):
+        Encoder.__init__(
+            self,
+            self.ccs[index])
+        self.name = "Volume_Fader_%d" % index
+
+
 class Controller(OptimizedControlSurface):
 
     def __init__(self, c):
         OptimizedControlSurface.__init__(self, c)
         with self.component_guard():
-            mixer = self.mixer()
+            mixer = Mixer()
             # session = self.session()
             # session.set_mixer(mixer)
 
-        # Turn off rebuild MIDI map until after we're done setting up.
-        # self.set_suppress_rebuild_requests(True)
-        # self.transport()
-        # self.set_suppress_rebuild_requests(False)
-
     def handle_sysex(self, midi_bytes):
         pass
-
-    def mixer(self):
-        mixer = SpecialMixerComponent(TRACKS)
-        mixer.name = 'Mixer'
-
-        mixer.master_strip().name = 'Master_Channel_Strip'
-        encoder = Encoder(17)
-        encoder.name = 'Master_Volume_Control'
-        mixer.master_strip().set_volume_control(encoder)
-
-        return mixer
 
 
 def create_instance(c):
