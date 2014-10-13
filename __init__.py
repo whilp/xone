@@ -10,7 +10,7 @@ from _Framework.EncoderElement import EncoderElement
 # from _Framework.Layer import Layer
 # from _Framework.MixerComponent import MixerComponent
 # from _Framework.SessionComponent import SessionComponent
-from _Framework.SliderElement import SliderElement
+# from _Framework.SliderElement import SliderElement
 # from _Framework.TransportComponent import TransportComponent
 
 from _Generic.SpecialMixerComponent import SpecialMixerComponent
@@ -24,17 +24,6 @@ CHANNEL = 14
 TRACKS = 4
 SCENES = 4
 MAP_MODE = Live.MidiMap.MapMode
-
-
-class Fader(SliderElement):
-    channel = CHANNEL
-
-    def __init__(self, identifier):
-        SliderElement.__init__(
-            self,
-            MIDI_CC_TYPE,
-            self.channel,
-            identifier)
 
 
 class Note(ButtonElement):
